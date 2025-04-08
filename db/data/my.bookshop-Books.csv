@@ -1,0 +1,31 @@
+ID,title,stock,category1,category2,publishedAt,Pages,Review
+1,The Great Gatsby,15,Fiction,Classic,1925-04-10,180,Good
+2,To Kill a Mockingbird,10,Fiction,Classic,1960-07-11,281,Good
+3,1984,20,Science Fiction,Dystopian,1949-06-08,328,Good
+4,The Catcher in the Rye,12,Fiction,Young Adult,1951-07-16,277,Bad
+5,Pride and Prejudice,25,Romance,Classic,1813-01-28,279,Good
+6,The Hobbit,18,Fantasy,Adventure,1937-09-21,310,Good
+7,Animal Farm,14,Fiction,Allegory,1945-08-17,112,Poor
+8,Brave New World,17,Science Fiction,Dystopian,1932-06-01,288,Bad
+9,The Lord of the Rings,8,Fantasy,Epic,1954-07-29,1178,Good
+10,Moby Dick,10,Fiction,Adventure,1851-10-18,585,Poor
+11,Wuthering Heights,13,Romance,Gothic,1847-12-01,342,Bad
+12,War and Peace,5,Classic,Historical,1869-01-01,1225,Good
+13,Crime and Punishment,7,Fiction,Philosophical,1866-01-01,551,Poor
+14,The Odyssey,20,Classic,Mythology,1800-01-01,541,Good
+15,Don Quixote,15,Fiction,Satire,1605-01-01,944,Bad
+16,One Hundred Years of Solitude,10,Fiction,Magical Realism,1967-05-30,417,Good
+17,The Picture of Dorian Gray,8,Fiction,Gothic,1890-07-01,254,Poor
+18,Frankenstein,12,Horror,Gothic,1818-01-01,280,Bad
+19,Jane Eyre,14,Romance,Gothic,1847-10-16,532,Good
+20,Dracula,9,Horror,Gothic,1897-05-26,418,Poor
+21,Alice's Adventures in Wonderland,22,Fantasy,Children,1865-11-26,96,Good
+22,The Alchemist,18,Fiction,Philosophical,1988-01-01,163,Bad
+23,Les Misérables,6,Classic,Historical,1862-01-01,1463,Poor
+24,The Divine Comedy,4,Poetry,Classic,1320-01-01,700,Good
+25,The Brothers Karamazov,3,Fiction,Philosophical,1880-01-01,824,Poor
+26,Ulysses,11,Fiction,Modernist,1922-02-02,730,Bad
+27,Madame Bovary,10,Fiction,Realism,1856-01-01,528,Good
+28,The Grapes of Wrath,16,Fiction,Classic,1939-04-14,464,Poor
+29,The Trial,9,Fiction,Existential,1925-01-01,240,Bad
+30,Lolita,7,Fiction,Controversial,1955-09-15,317,Good
