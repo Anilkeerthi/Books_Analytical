@@ -12,7 +12,7 @@ annotate service.BooksAnalytics with @(
       'filter',
       'search'
     ],
-    GroupableProperties   : [                  // If we didn't place the columns in the array we get the empty data in the Table
+    GroupableProperties   : [ // If we didn't place the columns in the array we get the empty data in the Table
       ID,
       category1,
       category2,
@@ -22,36 +22,41 @@ annotate service.BooksAnalytics with @(
       Pages,
       Review
     ],
-    AggregatableProperties: [{
-      $Type   : 'Aggregation.AggregatablePropertyType',
-      Property: stock
-    },
-    {
-      $Type : 'Aggregation.AggregatablePropertyType',
-      Property : Pages
-    }]
-  },
-  Aggregation.CustomAggregate #stock      : 'Edm.Decimal',
-  Aggregation.CustomAggregate #Pages       : 'Edm.Decimal',    // Here we need to define for count 
-  Common.SemanticKey                      : [ID],
 
+    // here what we are defining that are we can use in the charts
+    AggregatableProperties: [
+      {
+        $Type   : 'Aggregation.AggregatablePropertyType',
+        Property: stock
+      },
+      {
+        $Type   : 'Aggregation.AggregatablePropertyType',
+        Property: Pages
+      }
+    ]
+  },
+  Aggregation.CustomAggregate #stock      : 'Edm.Decimal', // Defined for column colunt
+  Aggregation.CustomAggregate #Pages      : 'Edm.Decimal', // Here we need to define for count
+  Common.SemanticKey                      : [ID],
 
 
   Analytics.AggregatedProperty #totalStock: {
     $Type               : 'Analytics.AggregatedPropertyType',
     AggregatableProperty: stock,
-    AggregationMethod   : 'sum',
+    AggregationMethod   : 'sum', // By this method we get sum of stock in the chart
     Name                : 'totalStock',
     ![@Common.Label]    : 'Total stock'
   },
 
 ) {
-  
+
   ID    @ID                 : 'ID';
-  Pages @Aggregation.default: #AVERAGE;                   // It Show the average of the column
-  stock @Aggregation.default: #SUM;                      // It shows the column count in the table
+  Pages @Aggregation.default: #AVERAGE; // It Show the average of the column
+  stock @Aggregation.default: #SUM; // It shows the column count in the table
 }
 
+
+// Defining the UI.chart
 annotate CatalogService.BooksAnalytics with @(UI.Chart: {
   $Type              : 'UI.ChartDefinitionType',
   Title              : 'Stock',
@@ -104,7 +109,7 @@ UI.PresentationVariant: {
 
 // Visual filters
 annotate CatalogService.BooksAnalytics with @(
-  UI.Chart #category1                  : {                             // we given in the manifest.json file
+  UI.Chart #category1                  : { // we given in the manifest.json file
     $Type          : 'UI.ChartDefinitionType',
     ChartType      : #Bar,
     Dimensions     : [category1],
@@ -115,7 +120,7 @@ annotate CatalogService.BooksAnalytics with @(
     Visualizations: ['@UI.Chart#category1', ],
   }
 ) {
-  category1 @Common.ValueList #vlCategory1: {
+  category1 @Common.ValueList #vlCategory1: { // value help is not working so,i defined in the xml file (value list)
     $Type                       : 'Common.ValueListType',
     CollectionPath              : 'BooksAnalytics',
     Parameters                  : [{
@@ -123,7 +128,7 @@ annotate CatalogService.BooksAnalytics with @(
       ValueListProperty: 'category1',
       LocalDataProperty: 'category1'
     }],
-    PresentationVariantQualifier: 'prevCategory1'                  // with out this chart will does not appear 
+    PresentationVariantQualifier: 'prevCategory1' // with out this chart will does not appear
   }
 }
 
@@ -206,7 +211,7 @@ annotate service.BooksAnalytics with @(
       $Type: 'UI.DataField',
       Value: publishedAt
     },
-      {
+    {
       $Type: 'UI.DataField',
       Value: Pages
     },
@@ -246,76 +251,86 @@ annotate service.BooksAnalytics with @() {
   })
 }
 
+
+// Header at the top of the table for count
 annotate service.BooksAnalytics with @UI.HeaderInfo: { //Header Info  Getting the Total count in the table data
   TypeName      : 'Total Records',
   TypeNamePlural: 'Total Records'
 };
 
 
-
-
-// Object Page 
+// Object Page
 
 
 // Header in the Object Page
 annotate CatalogService.BooksAnalytics with @UI.HeaderInfo: {
-  Title         : {                      // Main Title in Header
-    $Type : 'UI.DataField',
-    Value : title                        
+  Title      : { // Main Title in Header
+    $Type: 'UI.DataField',
+    Value: title
   },
-  Description   : {                      // Description in Header
-    $Type : 'UI.DataField',
-    Value : category1                    
+  Description: { // Description in Header
+    $Type: 'UI.DataField',
+    Value: category1
   }
 };
 
 
-
 // Facets in the Object Page
-annotate CatalogService.BooksAnalytics with @(
-  UI.Facets: [
+annotate CatalogService.BooksAnalytics with @(UI.Facets: [{
+  $Type : 'UI.CollectionFacet',
+  Label : 'General Information', // Unique label
+  Facets: [
     {
-      $Type  : 'UI.CollectionFacet',
-      Label  : 'General Information',  // Unique label
-      Facets : [
-        {
-          $Type       : 'UI.ReferenceFacet',
-          Label       : 'Basic Information',   // Unique label
-          Target      : '@UI.FieldGroup#BasicInfo'
-        },
-        {
-          $Type       : 'UI.ReferenceFacet',
-          Label       : 'Stock Details',  // Unique label
-          Target      : '@UI.FieldGroup#StockInfo'
-        }
-      ]
+      $Type : 'UI.ReferenceFacet',
+      Label : 'Basic Information', // Unique label
+      Target: '@UI.FieldGroup#BasicInfo'
     },
-
-    
+    {
+      $Type : 'UI.ReferenceFacet',
+      Label : 'Stock Details', // Unique label
+      Target: '@UI.FieldGroup#StockInfo'
+    }
   ]
-);
+},
+
+
+]);
 
 annotate CatalogService.BooksAnalytics with @(
-  UI.FieldGroup #BasicInfo: {                            // here we are giving the data in the Facets  section-1
-    $Type   : 'UI.FieldGroupType',
-    Label   : 'Basic Information',
-    Data    : [
-      { $Type: 'UI.DataField', Value: ID },
-      { $Type: 'UI.DataField', Value: title },
-      { $Type: 'UI.DataField', Value: category1 },
-      { $Type: 'UI.DataField', Value: category2 }
+  UI.FieldGroup #BasicInfo: { // here we are giving the data in the Facets  section-1
+    $Type: 'UI.FieldGroupType',
+    Label: 'Basic Information',
+    Data : [
+      {
+        $Type: 'UI.DataField',
+        Value: ID
+      },
+      {
+        $Type: 'UI.DataField',
+        Value: title
+      },
+      {
+        $Type: 'UI.DataField',
+        Value: category1
+      },
+      {
+        $Type: 'UI.DataField',
+        Value: category2
+      }
     ]
   },
-  UI.FieldGroup #StockInfo: {                         // here section-2
-    $Type   : 'UI.FieldGroupType',
-    Label   : 'Stock Information',
-    Data    : [
-      { $Type: 'UI.DataField', Value: stock },
-      { $Type: 'UI.DataField', Value: publishedAt }
+  UI.FieldGroup #StockInfo: { // here section-2
+    $Type: 'UI.FieldGroupType',
+    Label: 'Stock Information',
+    Data : [
+      {
+        $Type: 'UI.DataField',
+        Value: stock
+      },
+      {
+        $Type: 'UI.DataField',
+        Value: publishedAt
+      }
     ]
   }
 );
-
-
-
-
