@@ -12,7 +12,7 @@ annotate service.BooksAnalytics with @(
       'filter',
       'search'
     ],
-    GroupableProperties   : [ // If we didn't place the columns in the array we get the empty data in the Table
+    GroupableProperties  : [ // If we didn't place the columns in the array we get the empty data in the Table
       ID,
       category1,
       category2,
@@ -164,7 +164,9 @@ annotate CatalogService.BooksAnalytics with @(
     $Type          : 'UI.ChartDefinitionType',
     ChartType      : #Line,
     Dimensions     : [publishedAt],
-    DynamicMeasures: [ ![@Analytics.AggregatedProperty#totalStock] ]
+    DynamicMeasures: [ ![@Analytics.AggregatedProperty#totalStock] ],
+    
+
   },
   UI.PresentationVariant #prevPublishedAt: {
     $Type         : 'UI.PresentationVariantType',
@@ -224,7 +226,9 @@ annotate service.BooksAnalytics with @(
   UI.SelectionFields: [
     title,
     stock,
-  ]
+  ],
+  
+  
 );
 
 
@@ -291,7 +295,7 @@ annotate CatalogService.BooksAnalytics with @(UI.Facets: [{
       Target: '@UI.FieldGroup#StockInfo'
     }
   ]
-},
+ },
 
 
 ]);
